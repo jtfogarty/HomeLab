@@ -1,0 +1,129 @@
+Installation with an archive file
+sudo useradd elastic
+
+sudo vi /etc/security/limits.conf
+or
+sudo cat 'elastic - nofile 65536' >> /etc/security/limits.conf
+
+sudo vi /etc/sysctl.conf
+or
+sudo cat 'vm.max_map_count = 262144' >> /etc/sysctl.conf
+
+sudo sysctl -p  # to reload the conf file
+
+sudo su - elastic
+curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.2.1-linux-x86_64.tar.gz
+
+tar -xzvf elastic*
+
+rm -f *.tar
+
+mv elasticsearch-7.2.1* elasticsearch
+
+#master
+vi config/elasticsearch.yml 
+```
+cluster.name: c1
+node.name: master-1
+node.attr.zone: 1
+
+network.host: [_local_, _site_]
+
+discovery.seed_host: ["ip of master nodes"] #if only one master, leave unset
+
+cluster.initial_master_nodes: ["master-1"]
+
+#add node role; if all the below are false, it is a coordinator node
+node.master: true
+node.data: false
+node.ingest: false
+```
+vi config/jvm.options
+```
+-Xms768m
+-Xmx768m
+```
+
+#data-1
+vi config/elasticsearch.yml 
+```
+cluster.name: c1 
+node.name: data-1 
+node.attr.zone: 1 
+node.attr.temp: hot
+
+network.host: [_local_, _site_]
+
+discovery.seed_host: ["ip addr of master"] #if only one master, leave unset
+
+cluster.initial_master_nodes: ["master-1"]
+
+#add node role; if all the below are false, it is a coordinator node
+node.master: false
+node.data: true
+node.ingest: false
+```
+vi config/jvm.options
+```
+-Xms1G
+-Xmx1G
+```
+
+#data-2
+vi config/elasticsearch.yml 
+```
+cluster.name: c1 
+node.name: data-2 
+node.attr.zone: 2 
+node.attr.temp: warm
+
+network.host: [_local_, _site_]
+
+discovery.seed_host: ["ip addr of master"] #if only one master, leave unset
+
+cluster.initial_master_nodes: ["master-1"]
+
+#add node role; if all the below are false, it is a coordinator node
+node.master: false
+node.data: true
+node.ingest: false
+```
+vi config/jvm.options
+```
+-Xms1G
+-Xmx1G
+```
+
+#Start elasticsearch on all nodes
+./bin/elasticsearch -d -p pid
+#restart elasticsearch
+pkill pid && ./bin/elasticsearch -d -p pid
+
+#logs
+less ./logs/ci.log
+
+curl localhost:9200
+curl localhost:9200/_cat/ndoes?v
+
+#install Kibana
+curl -O https://artifacts.elastic.co/downloads/kibana/kibana-7.2.1-linux-x86_64.tar.gz
+tar -xzvf kibana-7.2.1-linux-x86_64.tar.gz
+rm -f *.tar
+mv kibana* kibana
+
+cd kibana
+vi config kibana.yml
+
+server.port: 80
+
+server.host: "ip addr of master 1 node"
+
+#start as root because it is running on port 80
+root> /home/elastic/kibana /bin/kibana --allow-root
+
+#in kibana
+GET _cat/nodes?v
+GET _cat/indexes?v
+
+
+

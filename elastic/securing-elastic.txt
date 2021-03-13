@@ -1,0 +1,138 @@
+On Master
+```
+cd elasticsearch
+mkdir config/certs && cd config/certs
+#create certificate authority
+
+/home/elastic/elasticsearch/bin/elasticsearch-certutil ca --out config/certs/ca --pass elastic_la
+
+#Generate a certificate for each of the nodes.  each certificate must be singed by the ca
+
+/home/elastic/elasticsearch/bin/elasticsearch-certutil cert --ca config/certs/ca \
+    --ca-pass elastic_la --name master-1 --out config/certs/master-1 --pass elastic_la
+
+/home/elastic/elasticsearch/bin/elasticsearch-certutil cert --ca config/certs/ca \
+    --ca-pass elastic_la --name data-1 --out config/certs/data-1 --pass elastic_la
+
+/home/elastic/elasticsearch/bin/elasticsearch-certutil cert --ca config/certs/ca \
+    --ca-pass elastic_la --name data-2 --out config/certs/data-2 --pass elastic_la
+
+/home/elastic/elasticsearch/bin/elasticsearch-certutil cert --ca config/certs/ca \
+    --ca-pass elastic_la --name node-1 --out config/certs/node-1 --pass elastic_la
+```
+On each node, create a config/certs directory
+move data-1, data-2 and node-1 to the appropriate server in the config/certs directory
+```
+/home/elastic/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.keystore.secure_password
+#>> enter password 
+/home/elastic/elasticsearch/bin/elasticsearch-keystore add xpack.security.transport.ssl.truststore.secure_password
+#>> enter password
+
+/home/elastic/elasticsearch/bin/elasticsearch-keystore add xpack.security.http.ssl.keystore.secure_password
+#>> enter password 
+/home/elastic/elasticsearch/bin/elasticsearch-keystore add xpack.security.http.ssl.truststore.secure_password
+#>> enter password
+
+#confirm by 
+elasticsearch-keystore list
+```
+```
+#master
+vi config/elasticsearch.yml 
+or
+cat <<EOF >>config/elasticsearch.yml
+xpack.security.enabled: true
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.verification_mode: certificate
+xpack.security.transport.ssl.keystore.path: certs/master-1
+xpack.security.transport.ssl.truststore.path: certs/master-1
+EOF
+
+#data-1
+vi config/elasticsearch.yml 
+or
+cat <<EOF >>config/elasticsearch.yml
+xpack.security.enabled: true
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.verification_mode: certificate
+xpack.security.transport.ssl.keystore.path: certs/data-1
+xpack.security.transport.ssl.truststore.path: certs/data-1
+EOF
+
+#data-2
+vi config/elasticsearch.yml 
+or
+cat <<EOF >>config/elasticsearch.yml
+xpack.security.enabled: true
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.verification_mode: certificate
+xpack.security.transport.ssl.keystore.path: certs/data-2
+xpack.security.transport.ssl.truststore.path: certs/data-2
+EOF
+
+#node-1
+vi config/elasticsearch.yml 
+or
+cat <<EOF >>config/elasticsearch.yml
+xpack.security.enabled: true
+xpack.security.transport.ssl.enabled: true
+xpack.security.transport.ssl.verification_mode: certificate
+xpack.security.transport.ssl.keystore.path: certs/node-1
+xpack.security.transport.ssl.truststore.path: certs/node-1
+EOF
+```
+```
+#now that security has been enabled, run the below on the master to set passwords for default users
+/home/elastic/elasticsearch/bin/elasticsearch-setup-password interactive
+
+# in kibana, edit the kibana.yaml file and set
+elasticsearch.username: "kibana"
+elasticsearch.password: "whatever"
+
+# restart elasticsearch and kibana on all nodes 
+# test with curl -u elastic http://localhost:9200 
+
+#the below will enable https
+#master
+vi config/elasticsearch.yml 
+or
+cat <<EOF >>config/elasticsearch.yml
+xpack.security.http.ssl.enabled: true
+xpack.security.http.ssl.keystore.path: certs/master-1
+xpack.security.http.ssl.truststore.path: certs/master-1
+EOF
+
+#data-1
+vi config/elasticsearch.yml 
+or
+cat <<EOF >>config/elasticsearch.yml
+xpack.security.http.ssl.enabled: true
+xpack.security.http.ssl.keystore.path: certs/data-1
+xpack.security.http.ssl.truststore.path: certs/data-1
+EOF
+
+#data-2
+vi config/elasticsearch.yml 
+or
+cat <<EOF >>config/elasticsearch.yml
+xpack.security.http.ssl.enabled: true
+xpack.security.http.ssl.keystore.path: certs/data-2
+xpack.security.http.ssl.truststore.path: certs/data-2
+EOF
+
+#node-1
+vi config/elasticsearch.yml 
+or
+cat <<EOF >>config/elasticsearch.yml
+xpack.security.http.ssl.enabled: true
+xpack.security.http.ssl.keystore.path: certs/node-1
+xpack.security.http.ssl.truststore.path: certs/node-1
+EOF
+
+# restart elasticsearch and kibana on all nodes using the -k option because of the self singed certs
+# test with curl -u elastic http://localhost:9200 -k
+
+vi config/kibana.yml
+elasticsearch.hosts: ["https://localhost:9200"]
+
+elasticsearch.ssl.verificationMode: none
