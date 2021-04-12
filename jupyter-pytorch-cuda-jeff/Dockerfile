@@ -49,7 +49,7 @@ RUN curl -sL "https://github.com/conda-forge/miniforge/releases/download/${MINIF
     pip=${PIP_VERSION} \
     # needed for allennlp
     jsonnet \
- && conda install -y python-Levenshtein \
+ #&& conda install -y python-Levenshtein \
  && conda update -y -q --all \
  && conda clean -a -f -y \
  && chown -R ${NB_USER}:users ${CONDA_DIR} \
