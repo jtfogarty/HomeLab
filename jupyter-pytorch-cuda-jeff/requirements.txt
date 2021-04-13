@@ -13,7 +13,7 @@ fitz==0.0.1.dev2
 
 fuzzywuzzy==0.18.0
 ghostscript==0.6
-jupyterlab==3.0.12
+jupyterlab==3.0.14
 lxml==4.5.1
 notebook==6.3.0
 opencv-python==4.3.0.36
@@ -29,3 +29,6 @@ tabula-py==2.2.0
 wandb==0.8.35
 xlrd==1.2.0
 xmlschema==1.2.2
+
+ipywidgets==7.6.3
+IProgress==0.4
