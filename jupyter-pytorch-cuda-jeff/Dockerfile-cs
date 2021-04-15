@@ -66,7 +66,7 @@ RUN python3 -m pip install --quiet --no-cache-dir \
 COPY --chown=jovyan:users requirements.txt /tmp
 RUN python3 -m pip install -r /tmp/requirements.txt --quiet --no-cache-dir \
  && rm -f /tmp/requirements.txt \
- && jupyter lab --generate-config \
+# && jupyter lab --generate-config \
  && rm -rf ${HOME}/.cache/yarn \
  && chown -R ${NB_USER}:users ${CONDA_DIR} \
  && chown -R ${NB_USER}:users ${HOME}
