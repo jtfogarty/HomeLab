@@ -207,7 +207,7 @@ class WordEmbeddings(TokenEmbeddings):
         self.embeddings = embeddings
 
         old_base_path = (
-            "https://nlp.informatik.hu-berlin.de/resources/embeddings/token/    "
+            "https://nlp.informatik.hu-berlin.de/resources/embeddings/token/"
         )
         base_path = (
             "https://s3.eu-central-1.amazonaws.com/alan-nlp/resources/embeddings-v0.3/"
