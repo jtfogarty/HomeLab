@@ -65,11 +65,7 @@ RUN python3 -m pip install --quiet --no-cache-dir \
 # install - reqs.txt
 COPY --chown=jovyan:users req1.txt /tmp 
 COPY --chown=jovyan:users req2.txt /tmp
-RUN python3 -m pip install -r /tmp/req1.txt --quiet --no-cache-dir \
- && jupyter lab --generate-config \
- && rm -rf ${HOME}/.cache/yarn \
- && chown -R ${NB_USER}:users ${CONDA_DIR} \
- && chown -R ${NB_USER}:users ${HOME}
+RUN python3 -m pip install -r /tmp/req1.txt --quiet --no-cache-dir 
 
 #copy flair
 COPY flair-0.4.5 /tmp
@@ -78,9 +74,13 @@ COPY flair-0.4.5 /tmp
 RUN python3 =m pip install /tmp/flair-0.4.5
 
 RUN python3 -m pip install -r /tmp/req2.txt --quiet --no-cache-dir \
-&& rm -f /tmp/req1.txt \
-&& rm -f /tmp/req2.txt \
-&& rm -rf /tmp/flair-0.4.5
+ && jupyter lab --generate-config \
+ && rm -rf ${HOME}/.cache/yarn \
+ && rm -f /tmp/req1.txt \
+ && rm -f /tmp/req2.txt \
+ && rm -rf /tmp/flair-0.4.5 \
+ && chown -R ${NB_USER}:users ${CONDA_DIR} \
+ && chown -R ${NB_USER}:users ${HOME}
 
 # s6 - copy scripts
 COPY --chown=jovyan:users s6/ /etc
