@@ -62,8 +62,9 @@ RUN python3 -m pip install --quiet --no-cache-dir \
     torchvision==0.6.1 \
     -f https://download.pytorch.org/whl/cu102/torch_stable.html
 
-# install - requirements.txt
-COPY --chown=jovyan:users requirements.txt /tmp
+# install - reqs.txt
+COPY --chown=jovyan:users req1.txt /tmp 
+COPY --chown=jovyan:users req2.txt /tmp
 RUN python3 -m pip install -r /tmp/req1.txt --quiet --no-cache-dir \
  && jupyter lab --generate-config \
  && rm -rf ${HOME}/.cache/yarn \
