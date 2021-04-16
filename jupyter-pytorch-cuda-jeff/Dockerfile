@@ -82,6 +82,11 @@ RUN python3 -m pip install -r /tmp/req2.txt --quiet --no-cache-dir \
  && chown -R ${NB_USER}:users ${CONDA_DIR} \
  && chown -R ${NB_USER}:users ${HOME}
 
+#Test flair
+COPY --chown=jovyan:users  test-flair.py ${HOME}/
+RUN python3 test-flair.py
+
+
 # s6 - copy scripts
 COPY --chown=jovyan:users s6/ /etc
 
