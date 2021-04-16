@@ -78,9 +78,9 @@ RUN python3 -m pip install -r /tmp/req2.txt --quiet --no-cache-dir \
  && chown -R ${NB_USER}:users ${HOME}
 
 #Copy updated files
-COPY --chown=jovyan:users flair/data.py /opt/conda/python3.6/site-packages/flair/
-COPY --chown=jovyan:users flair/embeddings.py /opt/conda/python3.6/site-packages/flair/
-COPY --chown=jovyan:users flair/sequence_tagger_model.py /opt/conda/python3.6/site-packages/flair/models
+COPY --chown=jovyan:users flair/data.py /opt/conda/lib/python3.6/site-packages/flair/
+COPY --chown=jovyan:users flair/embeddings.py /opt/conda/lib/python3.6/site-packages/flair/
+COPY --chown=jovyan:users flair/sequence_tagger_model.py /opt/conda/lib/python3.6/site-packages/flair/models
 
 #Test flair
 COPY --chown=jovyan:users  test-flair.py ${HOME}/
