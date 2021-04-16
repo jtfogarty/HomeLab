@@ -68,7 +68,7 @@ COPY --chown=jovyan:users req2.txt /tmp
 RUN python3 -m pip install -r /tmp/req1.txt --quiet --no-cache-dir 
 
 #copy flair
-COPY flair-0.4.5 /tmp
+COPY  --chown=jovyan:users flair-0.4.5 /tmp
 
 #install flair
 RUN python3 -m pip install /tmp/flair-0.4.5/
