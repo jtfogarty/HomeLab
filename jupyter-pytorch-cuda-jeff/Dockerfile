@@ -71,7 +71,7 @@ RUN python3 -m pip install -r /tmp/req1.txt --quiet --no-cache-dir
 COPY flair-0.4.5 /tmp
 
 #install flair
-RUN python3 =m pip install /tmp/flair-0.4.5
+RUN python3 -m pip install /tmp/flair-0.4.5
 
 RUN python3 -m pip install -r /tmp/req2.txt --quiet --no-cache-dir \
  && jupyter lab --generate-config \
