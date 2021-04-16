@@ -1843,7 +1843,7 @@ class FlairEmbeddings(TokenEmbeddings):
         super().__init__()
 
         cache_dir = Path("embeddings")
-
+        hu_path: str = "https://nlp.informatik.hu-berlin.de/resources/embeddings/flair/"
         aws_path: str = "https://s3.eu-central-1.amazonaws.com/alan-nlp/resources"
 
         self.PRETRAINED_MODEL_ARCHIVE_MAP = {
@@ -1855,16 +1855,27 @@ class FlairEmbeddings(TokenEmbeddings):
             "multi-v0-forward-fast": f"{aws_path}/embeddings-v0.4/lm-multi-forward-fast-v0.1.pt",
             "multi-v0-backward-fast": f"{aws_path}/embeddings-v0.4/lm-multi-backward-fast-v0.1.pt",
             # English models
-            "en-forward": f"{aws_path}/embeddings-v0.4.1/big-news-forward--h2048-l1-d0.05-lr30-0.25-20/news-forward-0.4.1.pt",
-            "en-backward": f"{aws_path}/embeddings-v0.4.1/big-news-backward--h2048-l1-d0.05-lr30-0.25-20/news-backward-0.4.1.pt",
-            "en-forward-fast": f"{aws_path}/embeddings/lm-news-english-forward-1024-v0.2rc.pt",
-            "en-backward-fast": f"{aws_path}/embeddings/lm-news-english-backward-1024-v0.2rc.pt",
-            "news-forward": f"{aws_path}/embeddings-v0.4.1/big-news-forward--h2048-l1-d0.05-lr30-0.25-20/news-forward-0.4.1.pt",
-            "news-backward": f"{aws_path}/embeddings-v0.4.1/big-news-backward--h2048-l1-d0.05-lr30-0.25-20/news-backward-0.4.1.pt",
-            "news-forward-fast": f"{aws_path}/embeddings/lm-news-english-forward-1024-v0.2rc.pt",
-            "news-backward-fast": f"{aws_path}/embeddings/lm-news-english-backward-1024-v0.2rc.pt",
-            "mix-forward": f"{aws_path}/embeddings/lm-mix-english-forward-v0.2rc.pt",
-            "mix-backward": f"{aws_path}/embeddings/lm-mix-english-backward-v0.2rc.pt",
+            # "en-forward": f"{aws_path}/embeddings-v0.4.1/big-news-forward--h2048-l1-d0.05-lr30-0.25-20/news-forward-0.4.1.pt",
+            # "en-backward": f"{aws_path}/embeddings-v0.4.1/big-news-backward--h2048-l1-d0.05-lr30-0.25-20/news-backward-0.4.1.pt",
+            # "en-forward-fast": f"{aws_path}/embeddings/lm-news-english-forward-1024-v0.2rc.pt",
+            # "en-backward-fast": f"{aws_path}/embeddings/lm-news-english-backward-1024-v0.2rc.pt",
+            # "news-forward": f"{aws_path}/embeddings-v0.4.1/big-news-forward--h2048-l1-d0.05-lr30-0.25-20/news-forward-0.4.1.pt",
+            # "news-backward": f"{aws_path}/embeddings-v0.4.1/big-news-backward--h2048-l1-d0.05-lr30-0.25-20/news-backward-0.4.1.pt",
+            # "news-forward-fast": f"{aws_path}/embeddings/lm-news-english-forward-1024-v0.2rc.pt",
+            # "news-backward-fast": f"{aws_path}/embeddings/lm-news-english-backward-1024-v0.2rc.pt",
+            # "mix-forward": f"{aws_path}/embeddings/lm-mix-english-forward-v0.2rc.pt",
+            # "mix-backward": f"{aws_path}/embeddings/lm-mix-english-backward-v0.2rc.pt",
+            "en-forward": f"{hu_path}/news-forward-0.4.1.pt",
+            "en-backward": f"{hu_path}/news-backward-0.4.1.pt",
+            "en-forward-fast": f"{hu_path}/lm-news-english-forward-1024-v0.2rc.pt",
+            "en-backward-fast": f"{hu_path}/lm-news-english-backward-1024-v0.2rc.pt",
+            "news-forward": f"{hu_path}/news-forward-0.4.1.pt",
+            "news-backward": f"{hu_path}/news-backward-0.4.1.pt",
+            "news-forward-fast": f"{hu_path}/lm-news-english-forward-1024-v0.2rc.pt",
+            "news-backward-fast": f"{hu_path}/lm-news-english-backward-1024-v0.2rc.pt",
+            "mix-forward": f"{hu_path}/lm-mix-english-forward-v0.2rc.pt",
+            "mix-backward": f"{hu_path}/lm-mix-english-backward-v0.2rc.pt",
+
             # Arabic
             "ar-forward": f"{aws_path}/embeddings-stefan-it/lm-ar-opus-large-forward-v0.1.pt",
             "ar-backward": f"{aws_path}/embeddings-stefan-it/lm-ar-opus-large-backward-v0.1.pt",

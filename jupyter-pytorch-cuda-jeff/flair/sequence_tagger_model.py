@@ -861,11 +861,11 @@ class SequenceTagger(flair.nn.Model):
         model_map = {}
 
         aws_resource_path_v04 = (
-            "https://s3.eu-central-1.amazonaws.com/alan-nlp/resources/models-v0.4"
+            "https://nlp.informatik.hu-berlin.de/resources/models"
         )
 
         model_map["ner"] = "/".join(
-            [aws_resource_path_v04, "NER-conll03-english", "en-ner-conll03-v0.4.pt"]
+            [aws_resource_path_v04, "ner", "en-ner-conll03-v0.4.pt"]
         )
 
         model_map["ner-fast"] = "/".join(

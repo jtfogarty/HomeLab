@@ -67,18 +67,18 @@ COPY --chown=jovyan:users req1.txt /tmp
 COPY --chown=jovyan:users req2.txt /tmp
 RUN python3 -m pip install -r /tmp/req1.txt --quiet --no-cache-dir 
 
-#copy flair
-COPY  --chown=jovyan:users flair-0.4.5 /tmp
+RUN python3 -m pip install flair==0.4.5
 
-#install flair
-RUN python3 -m pip install /tmp/flair-0.4.5/setup.py
+#Copy updated files
+COPY --chown=jovyan:users flair/data.py /opt/conda/python3.6/site-packages/flair/
+COPY --chown=jovyan:users flair/embeddings.py /opt/conda/python3.6/site-packages/flair/
+COPY --chown=jovyan:users flair/sequence_tagger_model.py /opt/conda/python3.6/site-packages/flair/models
 
 RUN python3 -m pip install -r /tmp/req2.txt --quiet --no-cache-dir \
  && jupyter lab --generate-config \
  && rm -rf ${HOME}/.cache/yarn \
  && rm -f /tmp/req1.txt \
  && rm -f /tmp/req2.txt \
- && rm -rf /tmp/flair-0.4.5 \
  && chown -R ${NB_USER}:users ${CONDA_DIR} \
  && chown -R ${NB_USER}:users ${HOME}
 
