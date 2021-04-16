@@ -64,12 +64,22 @@ RUN python3 -m pip install --quiet --no-cache-dir \
 
 # install - requirements.txt
 COPY --chown=jovyan:users requirements.txt /tmp
-RUN python3 -m pip install -r /tmp/requirements.txt --quiet --no-cache-dir \
- && rm -f /tmp/requirements.txt \
+RUN python3 -m pip install -r /tmp/req1.txt --quiet --no-cache-dir \
  && jupyter lab --generate-config \
  && rm -rf ${HOME}/.cache/yarn \
  && chown -R ${NB_USER}:users ${CONDA_DIR} \
  && chown -R ${NB_USER}:users ${HOME}
+
+#copy flair
+COPY flair-0.4.5 /tmp
+
+#install flair
+RUN python3 =m pip install /tmp/flair-0.4.5
+
+RUN python3 -m pip install -r /tmp/req2.txt --quiet --no-cache-dir \
+&& rm -f /tmp/req1.txt \
+&& rm -f /tmp/req2.txt \
+&& rm -rf /tmp/flair-0.4.5
 
 # s6 - copy scripts
 COPY --chown=jovyan:users s6/ /etc
