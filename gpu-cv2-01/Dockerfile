@@ -6,6 +6,6 @@ RUN python3 -m pip install -r /tmp/requirements.txt --quiet --no-cache-dir \
 # RUN conda install cv2 \
  && rm -f /tmp/requirements.txt 
 USER root
-RUN sudo apt-get upgrade \
- && sudo apt update && apt install -y libsm6 libxext6 ffmpeg libfontconfig1 libxrender1 libgl1-mesa-glx
+RUN apt-get upgrade \
+ && apt update && apt install -y libsm6 libxext6 ffmpeg libfontconfig1 libxrender1 libgl1-mesa-glx
 USER ${NB_UID}
