@@ -25,9 +25,6 @@ jsoncsv==2.0.9
 scipy==1.6.0
 pickle5
 statsmodels==0.12.0
-sasl
-thrift
-pyhive
 
 # pytorch packages
 #torchelastic==0.2.2 this currently causes a dependency conflict, should be fixed very soon
