@@ -1,6 +1,6 @@
 FROM public.ecr.aws/j1r0q0g6/notebooks/notebook-servers/jupyter-pytorch:master-3dbc352f
 
-#USER root
+USER root
 
 # install gcc
 RUN export DEBIAN_FRONTEND=noninteractive \
