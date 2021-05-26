@@ -21,7 +21,8 @@ numpy == 1.20.1
 xgboost == 1.4.0
 pandas == 1.2.2
 sqlalchemy == 1.3.23
-json #== 2.0.9
+yaml
+#json == 2.0.9
 scipy == 1.6.0
 pickle == 4.0
 statsmodels == 0.12.0
