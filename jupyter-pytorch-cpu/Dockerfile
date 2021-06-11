@@ -9,5 +9,5 @@ RUN python3 -m pip install -r /tmp/requirements.txt --no-cache-dir \
 RUN conda install pytorch cudatoolkit=10.1 -c pytorch
 USER root
 RUN apt update
-RUN apt install nvidia-driver-418
+RUN apt install -y nvidia-driver-418
 USER ${NB_UID}
