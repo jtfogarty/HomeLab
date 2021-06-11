@@ -32,7 +32,7 @@ SQLAlchemy==1.2.7
 #vincent==0.4.4
 #xlrd==2.0.1
 
-torch==1.7.1+cpu
+torch==1.8.1
 cudatoolkit==10.1
 #torchvision==0.8.2+cpu
 #torchaudio==0.7.2
