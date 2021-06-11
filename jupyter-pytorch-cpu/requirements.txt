@@ -32,8 +32,8 @@ SQLAlchemy==1.2.7
 #vincent==0.4.4
 #xlrd==2.0.1
 
-torch==1.8.1
-cudatoolkit==10.2
+#torch==1.8.1
+#cudatoolkit==10.2
 #torchvision==0.8.2+cpu
 #torchaudio==0.7.2
 numpy==1.18.1
